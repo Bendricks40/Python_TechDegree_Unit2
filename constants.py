@@ -4,6 +4,7 @@ TEAMS = [
     'Warriors',
 ]
 
+
 PLAYERS = [{
         'name': 'Karl Saygan',
         'guardians': 'Heather Bledsoe',
