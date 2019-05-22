@@ -7,6 +7,7 @@ def run_app():
         print(player)
     for team in constants.TEAMS:
         print(team)
+        print("hi mom!")
 
 
 if __name__ == '__main__':
