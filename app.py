@@ -3,11 +3,12 @@ import constants
 
 def run_app():
 
+    myPlayers = []
+
     for player in constants.PLAYERS:
-        print(player)
-    for team in constants.TEAMS:
-        print(team)
-        print("hi mom!")
+        myPlayers.append(player)
+    print(myPlayers)
+
 
 
 if __name__ == '__main__':
