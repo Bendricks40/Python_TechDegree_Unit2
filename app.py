@@ -11,8 +11,19 @@ def run_app():
     for team in constants.TEAMS:
         myTeams.append(team)
 
+    # cleaning up the guardian list to be a list of strings instead of one or more guardians as a single string
+    # als making the "height" string a list that is comprised of first the numeric value and then unit of measure (inches in this data set)
+    for player in myPlayers:
+        guardianList = (player.get("guardians")).split(" and ")
+        player.update({"guardians": guardianList})
+        heightStats = (player.get("height")).split(" ")
+        player.update({"height": heightStats})
+
+    print(myPlayers)
+
     teamNum = 0
 
+    # iterate through each player and assign them to a team.
     for player in myPlayers:
         if teamNum == 3:
             teamNum = 0
@@ -44,19 +55,35 @@ def run_app():
                 option = input("\nEnter the number above for the team you'd like to see stats for: ")
                 if 0 < int(option) < counter:
                     validOption = True
-                    print("*put team stats here--team Name, # of total players, Names*")
-                    print("Team Name: {}".format(myTeams[int(option)-1]))
+                    # put team stats here--team Name, # of total players, Names
+                    print("\nTeam Name: {}".format(myTeams[int(option)-1]))
                     totalPlayers = 0
+                    totalHeight = 0
                     playerString = " "
+                    totalExperienced = 0
+                    totalInexperienced = 0
                     for player in myPlayers:
+                        # confirm as we loop through the players if they belong to the selected team
                         if player.get("Team") == myTeams[int(option)-1]:
                             totalPlayers += 1
+                            # Then add their height to the total height pool
+                            totalHeight += int(player.get("height")[0])
+                            # and now verify if they are experienced or inexperienced, and increment appropriate bucket
+                            if player.get("experience") == "YES":
+                                totalExperienced += 1
+                            else:
+                                totalInexperienced += 1
+                            # now start building out the player string for all players on the team:
                             if totalPlayers == 1:
                                 playerString += (player.get("name"))
                             else:
                                 playerString += (", " + player.get("name"))
+                    print("\n***TEAM STATS***")
                     print("Total Players: {}".format(totalPlayers))
                     print("Here are all the players: {}".format(playerString))
+                    print("There are {} experienced players on the team, and {} inexperienced players".format(totalExperienced, totalInexperienced))
+                    print("Here is the average height: {} inches".format(round(totalHeight/totalPlayers)))
+
 
                 else:
                     print("Please choose a valid option")
