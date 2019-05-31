@@ -68,15 +68,16 @@ def run_app():
                         totalPlayers = 0
                         totalHeight = 0
                         playerString = " "
+                        guardianString = " "
                         totalExperienced = 0
                         totalInexperienced = 0
                         for player in myPlayers:
                             # confirm as we loop through the players if they belong to the selected team
                             if player.get("Team") == myTeams[int(option)-1]:
                                 totalPlayers += 1
-                                # Then add their height to the total height pool
+                                # Then if they are on selected team, add their height to the total height pool
                                 totalHeight += int(player.get("height")[0])
-                                # and now verify if they are experienced or inexperienced, and increment appropriate bucket
+                                # and now verify if they are experienced or inexperienced, and increment appropriately
                                 if player.get("experience") == "YES":
                                     totalExperienced += 1
                                 else:
@@ -86,11 +87,21 @@ def run_app():
                                     playerString += (player.get("name"))
                                 else:
                                     playerString += (", " + player.get("name"))
+                                # And finally, build out the guardian string:
+                                if totalPlayers == 1:
+                                    guardianString += ((", ".join(player.get("guardians"))) + ",")
+                                else:
+                                    guardianString += (" " + (", ".join(player.get("guardians"))) + ",")
+
+                        # couldn't figure out a better way to do this, but my guardian string
+                        # building logic above leaves the last entry ending in a comma, even
+                        # though there are no further entries... So chopping off last character :)
+                        guardianString = guardianString[:-1]
                         print("* Total Players: {}".format(totalPlayers))
                         print("* Here are all the players: \n  {}".format(playerString))
                         print("* There are {} experienced players on the team, and {} inexperienced players".format(totalExperienced, totalInexperienced))
-                        print("* Average height of team: {} inches\n\n".format(round(totalHeight/totalPlayers)))
-
+                        print("* Average height of team: {} inches".format(round(totalHeight/totalPlayers)))
+                        print("* Guardians of players: \n  {}\n\n".format(guardianString))
 
 
                     else:
@@ -99,16 +110,12 @@ def run_app():
                     print("\nOops, that was a bogus entry..."
                           "Please try again with a value from 1 to {}. Error message: {}".format(len(myTeams), e))
 
-            choice = input("\nWould you like to view another team? Enter 1 for Yes or 2 to quit/exit.")
-            if choice == "1":
-                keepgoing = True
-            else:
-                keepgoing = False
-                print("\n\nThanks for using this tool! Goodbye.\n\n")
+            input("Press Enter to continue...")
 
         elif option.upper() == "2":
             print("\nGoodbye! It's been fun. Sorry we couldn't make this work :( "
-                  "I'm sure it's not me, it's you....right?")
+                  "I'm sure it's not me, it's you....right???")
+            keepgoing = False
 
 
 if __name__ == '__main__':
