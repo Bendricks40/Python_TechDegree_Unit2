@@ -44,7 +44,20 @@ def run_app():
                 option = input("\nEnter the number above for the team you'd like to see stats for: ")
                 if 0 < int(option) < counter:
                     validOption = True
-                    print("they chose a valid team!")
+                    print("*put team stats here--team Name, # of total players, Names*")
+                    print("Team Name: {}".format(myTeams[int(option)-1]))
+                    totalPlayers = 0
+                    playerString = " "
+                    for player in myPlayers:
+                        if player.get("Team") == myTeams[int(option)-1]:
+                            totalPlayers += 1
+                            if totalPlayers == 1:
+                                playerString += (player.get("name"))
+                            else:
+                                playerString += (", " + player.get("name"))
+                    print("Total Players: {}".format(totalPlayers))
+                    print("Here are all the players: {}".format(playerString))
+
                 else:
                     print("Please choose a valid option")
             except ValueError as e:
