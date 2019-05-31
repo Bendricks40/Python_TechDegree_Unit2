@@ -11,8 +11,9 @@ def run_app():
     for team in constants.TEAMS:
         myTeams.append(team)
 
-    # cleaning up the guardian list to be a list of strings instead of one or more guardians as a single string
-    # als making the "height" string a list that is comprised of first the numeric value and then unit of measure (inches in this data set)
+    # Cleaning up the guardian list to be a list of strings instead of one or more guardians as a single string
+    # Also making the "height" string a list that is comprised of first
+    # the numeric value and then unit of measure (inches in this data set)
     for player in myPlayers:
         guardianList = (player.get("guardians")).split(" and ")
         player.update({"guardians": guardianList})
@@ -78,11 +79,12 @@ def run_app():
                                 playerString += (player.get("name"))
                             else:
                                 playerString += (", " + player.get("name"))
-                    print("\n***TEAM STATS***")
+                    print("\n***TEAM STATS***\n")
                     print("Total Players: {}".format(totalPlayers))
                     print("Here are all the players: {}".format(playerString))
                     print("There are {} experienced players on the team, and {} inexperienced players".format(totalExperienced, totalInexperienced))
                     print("Here is the average height: {} inches".format(round(totalHeight/totalPlayers)))
+
 
 
                 else:
