@@ -3,9 +3,10 @@ import constants
 myPlayers = []
 myTeams = []
 
+
 def import_and_balance():
-
-
+    """this function takes the data from constants file and puts it in my own
+    objects, and then cleans up the data per instructions in project"""
     for player in constants.PLAYERS:
         myPlayers.append(player)
     for team in constants.TEAMS:
@@ -26,21 +27,19 @@ def import_and_balance():
     # iterate through each player and assign them to a team, evenly balancing experienced and inexperienced players.
     for player in myPlayers:
         if player.get("experience") == "YES":
-            print("This player is experienced")
             if experiencedteamNum == 3:
                 experiencedteamNum = 0
             player.update({"Team": myTeams[experiencedteamNum]})
             experiencedteamNum += 1
         else:  # not experienced...we found a noob!
-            print("This player is NOT experienced")
             if inexperiencedteamNum == 3:
                 inexperiencedteamNum = 0
             player.update({"Team": myTeams[inexperiencedteamNum]})
             inexperiencedteamNum += 1
 
 
-
 def display_teams():
+    """this function simply spits out the teams in a numbered list"""
     counter = 1  # Set a counter so that we can loop through the teams and put a number in front of each
     print("\n")
     for team in myTeams:  # Print out the list of teams to see stats for
@@ -49,7 +48,7 @@ def display_teams():
 
 
 def run_app():
-
+    """this function runs the main logic of the program so user can choose a team to display stats for!"""
     import_and_balance()
 
     print("\n**********************************************"
@@ -59,7 +58,7 @@ def run_app():
     keepgoing = True
 
     while keepgoing == True:
-        option = input("Enter one of the following options: \n\n"
+        option = input("\nEnter one of numbers below for the following options: \n\n"
                        "1. Display Team Stats \n2. Quit \n\nEnter choice here: ")
 
         if option.upper() == "1":  # User wants to see team stats! Enter loop below
@@ -113,7 +112,6 @@ def run_app():
                         print("* There are {} experienced players on the team, and {} inexperienced players".format(totalExperienced, totalInexperienced))
                         print("* Average height of team: {} inches".format(round(totalHeight/totalPlayers)))
                         print("* Guardians of players: \n  {}\n\n".format(guardianString))
-
 
                     else:
                         print("Please choose a valid option")
