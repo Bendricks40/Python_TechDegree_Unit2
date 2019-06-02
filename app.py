@@ -58,7 +58,7 @@ def run_app():
     keepgoing = True
 
     while keepgoing == True:
-        option = input("\nEnter one of numbers below for the following options: \n\n"
+        option = input("\nEnter one of the numbers below for the following options: \n\n"
                        "1. Display Team Stats \n2. Quit \n\nEnter choice here: ")
 
         if option.upper() == "1":  # User wants to see team stats! Enter loop below
