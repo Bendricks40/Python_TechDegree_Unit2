@@ -20,14 +20,24 @@ def import_and_balance():
         heightStats = (player.get("height")).split(" ")
         player.update({"height": heightStats})
 
-    teamNum = 0
+    experiencedteamNum = 0
+    inexperiencedteamNum = 0
 
-    # iterate through each player and assign them to a team.
+    # iterate through each player and assign them to a team, evenly balancing experienced and inexperienced players.
     for player in myPlayers:
-        if teamNum == 3:
-            teamNum = 0
-        player.update({"Team": myTeams[teamNum]})
-        teamNum += 1
+        if player.get("experience") == "YES":
+            print("This player is experienced")
+            if experiencedteamNum == 3:
+                experiencedteamNum = 0
+            player.update({"Team": myTeams[experiencedteamNum]})
+            experiencedteamNum += 1
+        else:  # not experienced...we found a noob!
+            print("This player is NOT experienced")
+            if inexperiencedteamNum == 3:
+                inexperiencedteamNum = 0
+            player.update({"Team": myTeams[inexperiencedteamNum]})
+            inexperiencedteamNum += 1
+
 
 
 def display_teams():
@@ -97,6 +107,7 @@ def run_app():
                         # building logic above leaves the last entry ending in a comma, even
                         # though there are no further entries... So chopping off last character :)
                         guardianString = guardianString[:-1]
+
                         print("* Total Players: {}".format(totalPlayers))
                         print("* Here are all the players: \n  {}".format(playerString))
                         print("* There are {} experienced players on the team, and {} inexperienced players".format(totalExperienced, totalInexperienced))
