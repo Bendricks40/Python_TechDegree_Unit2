@@ -1,16 +1,13 @@
 import constants
+import copy
 
-myPlayers = []
-myTeams = []
+myPlayers = copy.deepcopy(constants.PLAYERS)
+myTeams = copy.deepcopy(constants.TEAMS)
 
 
 def import_and_balance():
     """this function takes the data from constants file and puts it in my own
     objects, and then cleans up the data per instructions in project"""
-    for player in constants.PLAYERS:
-        myPlayers.append(player)
-    for team in constants.TEAMS:
-        myTeams.append(team)
 
     # Cleaning up the guardian list to be a list of strings instead of one or more guardians as a single string
     # Also making the "height" string a list that is comprised of first
@@ -19,14 +16,21 @@ def import_and_balance():
         guardianList = (player.get("guardians")).split(" and ")
         player.update({"guardians": guardianList})
         heightStats = (player.get("height")).split(" ")
+        heightStats[0] = int(heightStats[0])
         player.update({"height": heightStats})
+        # Saving off the experienced field as Boolean
+        if player.get("experience") == 'YES':
+            player.update({"experience": True})
+        elif player.get("experience") == "NO":
+            player.update({"experience": False})
+
 
     experiencedteamNum = 0
     inexperiencedteamNum = 0
 
     # iterate through each player and assign them to a team, evenly balancing experienced and inexperienced players.
     for player in myPlayers:
-        if player.get("experience") == "YES":
+        if player.get("experience") == True:
             if experiencedteamNum == 3:
                 experiencedteamNum = 0
             player.update({"Team": myTeams[experiencedteamNum]})
@@ -73,7 +77,7 @@ def run_app():
                     if 0 < int(option) < counter+1:
                         validOption = True
                         # put team stats here--team Name, # of total players, Names
-                        print("\nStats for Team Name: {}\n".format(myTeams[int(option)-1]))
+                        print("\nStats for Team Name: {}\n".format(myTeams[int(option) - 1]))
                         totalPlayers = 0
                         totalHeight = 0
                         playerString = " "
@@ -82,12 +86,12 @@ def run_app():
                         totalInexperienced = 0
                         for player in myPlayers:
                             # confirm as we loop through the players if they belong to the selected team
-                            if player.get("Team") == myTeams[int(option)-1]:
+                            if player.get("Team") == myTeams[int(option) - 1]:
                                 totalPlayers += 1
                                 # Then if they are on selected team, add their height to the total height pool
-                                totalHeight += int(player.get("height")[0])
+                                totalHeight += (player.get("height")[0])
                                 # and now verify if they are experienced or inexperienced, and increment appropriately
-                                if player.get("experience") == "YES":
+                                if player.get("experience") == True:
                                     totalExperienced += 1
                                 else:
                                     totalInexperienced += 1
