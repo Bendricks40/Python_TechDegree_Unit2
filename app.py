@@ -9,6 +9,8 @@ def import_and_balance():
     """this function takes the data from constants file and puts it in my own
     objects, and then cleans up the data per instructions in project"""
 
+
+
     # Cleaning up the guardian list to be a list of strings instead of one or more guardians as a single string
     # Also making the "height" string a list that is comprised of first
     # the numeric value and then unit of measure (inches in this data set)
